@@ -21,19 +21,19 @@
         ],
         "properties": {
           "rideID": {
-            "type": "interger"
+            "type": "integer"
           },
           "startLat": {
-            "type": "interger"
+            "type": "integer"
           },
           "startLong": {
-            "type": "interger"
+            "type": "integer"
           },
           "endLat": {
-            "type": "interger"
+            "type": "integer"
           },
           "endLong": {
-            "type": "interger"
+            "type": "integer"
           },
           "riderName": {
             "type": "string"
@@ -49,6 +49,41 @@
           }
         }
       },
+      "RideBody": {
+        "type": "object",
+        "required": [
+          "startLat",
+          "startLong",
+          "endLat",
+          "endLong",
+          "riderName",
+          "driverName",
+          "driverVehicle"
+        ],
+        "properties": {
+          "startLat": {
+            "type": "integer"
+          },
+          "startLong": {
+            "type": "integer"
+          },
+          "endLat": {
+            "type": "integer"
+          },
+          "endLong": {
+            "type": "integer"
+          },
+          "riderName": {
+            "type": "string"
+          },
+          "driverName": {
+            "type": "string"
+          },
+          "driverVehicle": {
+            "type": "string"
+          }
+        }
+      },
       "NOT_FOUND": {
         "type": "object",
         "properties": {
@@ -59,6 +94,18 @@
           "message": {
             "type": "string",
             "const": "Could not find any rides"
+          }
+        }
+      },
+      "VALIDATION_ERROR": {
+        "type": "object",
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "const": "VALIDATION_ERROR"
+          },
+          "message": {
+            "type": "string"
           }
         }
       }
@@ -98,6 +145,64 @@
                     },
                     {
                       "$ref": "#/components/schemas/NOT_FOUND"
+                    }
+                  ]
+                },
+                "example": [
+                  {
+                    "rideID": 1,
+                    "startLat": -90,
+                    "startLong": -179,
+                    "endLat": 90,
+                    "endLong": 179,
+                    "riderName": "Mbah Buyut",
+                    "driverName": "Widya",
+                    "driverVehicle": "Sepeda",
+                    "created": "2022-05-17 14:28:32"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createRide",
+        "summary": "Create a new ride",
+        "requestBody": {
+          "description": "Ride to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideBody"
+              },
+              "example": {
+                "startLat": -90,
+                "startLong": -179,
+                "endLat": 90,
+                "endLong": 179,
+                "riderName": "Mbah Buyut",
+                "driverName": "Widya",
+                "driverVehicle": "Sepeda"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of rides",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Ride"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/VALIDATION_ERROR"
                     }
                   ]
                 },
