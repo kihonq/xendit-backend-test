@@ -128,7 +128,13 @@
           "200": {
             "description": "Response for when the service is up",
             "content": {
-              "text/html; charset=utf-8": "Healthy"
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "const": "Healthy"
+                },
+                "example": "Healthy"
+              }
             }
           }
         }
