@@ -24,16 +24,20 @@
             "type": "integer"
           },
           "startLat": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "startLong": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "endLat": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "endLong": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "riderName": {
             "type": "string"
@@ -62,16 +66,20 @@
         ],
         "properties": {
           "startLat": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "startLong": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "endLat": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "endLong": {
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "riderName": {
             "type": "string"
@@ -151,10 +159,10 @@
                 "example": [
                   {
                     "rideID": 1,
-                    "startLat": -90,
-                    "startLong": -179,
-                    "endLat": 90,
-                    "endLong": 179,
+                    "startLat": -90.123,
+                    "startLong": -179.0909,
+                    "endLat": 90.9191,
+                    "endLong": 179.4321,
                     "riderName": "Mbah Buyut",
                     "driverName": "Widya",
                     "driverVehicle": "Sepeda",
@@ -177,10 +185,10 @@
                 "$ref": "#/components/schemas/RideBody"
               },
               "example": {
-                "startLat": -90,
-                "startLong": -179,
-                "endLat": 90,
-                "endLong": 179,
+                "startLat": -90.123,
+                "startLong": -179.0909,
+                "endLat": 90.9191,
+                "endLong": 179.4321,
                 "riderName": "Mbah Buyut",
                 "driverName": "Widya",
                 "driverVehicle": "Sepeda"
@@ -209,10 +217,10 @@
                 "example": [
                   {
                     "rideID": 1,
-                    "startLat": -90,
-                    "startLong": -179,
-                    "endLat": 90,
-                    "endLong": 179,
+                    "startLat": -90.123,
+                    "startLong": -179.0909,
+                    "endLat": 90.9191,
+                    "endLong": 179.4321,
                     "riderName": "Mbah Buyut",
                     "driverName": "Widya",
                     "driverVehicle": "Sepeda",
@@ -259,10 +267,10 @@
                 "example": [
                   {
                     "rideID": 1,
-                    "startLat": -90,
-                    "startLong": -179,
-                    "endLat": 90,
-                    "endLong": 179,
+                    "startLat": -90.123,
+                    "startLong": -179.0909,
+                    "endLat": 90.9191,
+                    "endLong": 179.4321,
                     "riderName": "Mbah Buyut",
                     "driverName": "Widya",
                     "driverVehicle": "Sepeda",
