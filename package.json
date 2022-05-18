@@ -12,6 +12,7 @@
   "scripts": {
     "test": "mocha tests",
     "lint": "eslint --ext .js,.ts index.js tests",
+    "cover": "nyc npm run test",
     "start": "node index.js",
     "watch:docs": "npx @redocly/cli preview-docs docs/openapi.json",
     "build:docs": "npx redoc-cli build docs/openapi.json --output docs/index.html",
@@ -34,6 +35,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "mocha": "^9.2.1",
+    "nyc": "^15.1.0",
     "supertest": "^6.2.2"
   }
 }
