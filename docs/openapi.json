@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Rides API",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "Ride": {
+        "type": "object",
+        "required": [
+          "rideID",
+          "startLat",
+          "startLong",
+          "endLat",
+          "endLong",
+          "riderName",
+          "driverName",
+          "driverVehicle",
+          "created"
+        ],
+        "properties": {
+          "rideID": {
+            "type": "interger"
+          },
+          "startLat": {
+            "type": "interger"
+          },
+          "startLong": {
+            "type": "interger"
+          },
+          "endLat": {
+            "type": "interger"
+          },
+          "endLong": {
+            "type": "interger"
+          },
+          "riderName": {
+            "type": "string"
+          },
+          "driverName": {
+            "type": "string"
+          },
+          "driverVehicle": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          }
+        }
+      },
+      "NOT_FOUND": {
+        "type": "object",
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "const": "RIDES_NOT_FOUND_ERROR"
+          },
+          "message": {
+            "type": "string",
+            "const": "Could not find any rides"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Get health status",
+        "responses": {
+          "200": {
+            "description": "Response for when the service is up",
+            "content": {
+              "text/html; charset=utf-8": "Healthy"
+            }
+          }
+        }
+      }
+    },
+    "/rides": {
+      "get": {
+        "operationId": "rides",
+        "summary": "Get list of rides",
+        "responses": {
+          "200": {
+            "description": "List of rides",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Ride"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/NOT_FOUND"
+                    }
+                  ]
+                },
+                "example": [
+                  {
+                    "rideID": 1,
+                    "startLat": -90,
+                    "startLong": -179,
+                    "endLat": 90,
+                    "endLong": 179,
+                    "riderName": "Mbah Buyut",
+                    "driverName": "Widya",
+                    "driverVehicle": "Sepeda",
+                    "created": "2022-05-17 14:28:32"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rides/:id": {
+      "get": {
+        "operationId": "ride",
+        "summary": "Get a ride by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Ride ID",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride with the ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Ride"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/NOT_FOUND"
+                    }
+                  ]
+                },
+                "example": [
+                  {
+                    "rideID": 1,
+                    "startLat": -90,
+                    "startLong": -179,
+                    "endLat": 90,
+                    "endLong": 179,
+                    "riderName": "Mbah Buyut",
+                    "driverName": "Widya",
+                    "driverVehicle": "Sepeda",
+                    "created": "2022-05-17 14:28:32"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

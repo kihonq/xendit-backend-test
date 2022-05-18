@@ -8,7 +8,11 @@
   },
   "scripts": {
     "test": "mocha tests",
-    "start": "node index.js"
+    "start": "node index.js",
+    "watch:docs": "npx @redocly/cli preview-docs docs/openapi.json",
+    "build:docs": "npx redoc-cli build docs/openapi.json --output docs/index.html",
+    "serve:docs": "npx serve docs",
+    "docs": "npm run build:docs && npm run serve:docs"
   },
   "keywords": [
     "Xendit"
