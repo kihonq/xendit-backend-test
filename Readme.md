@@ -31,6 +31,8 @@ Feel free to use any open source documentation tools such as OpenAPI / Swagger.
 
 1. A pull request against `master` of your fork with a clear description of the change and purpose and merge it
 2. **[BONUS]** Create an easy way to deploy and view the documentation in a web format and include instructions to do so
+    - Run `npm run docs` and access the documentation through http://localhost:3000
+    - For doc development, run `npm run watch:docs` and access through http://localhost:8080 to see live changes
 
 ### Implement Tooling
 
