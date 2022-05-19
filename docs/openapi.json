@@ -1,5 +1,11 @@
 {
   "openapi": "3.0.3",
+  "servers": [
+    {
+      "url": "http://localhost:8010/",
+      "description": "Local server"
+    }
+  ],
   "info": {
     "title": "Rides API",
     "version": "1.0.0"
@@ -21,35 +27,44 @@
         ],
         "properties": {
           "rideID": {
-            "type": "integer"
+            "type": "integer",
+            "example": 1
           },
           "startLat": {
             "type": "number",
+            "example": -90.123,
             "format": "double"
           },
           "startLong": {
             "type": "number",
+            "example": -179.0909,
             "format": "double"
           },
           "endLat": {
             "type": "number",
+            "example": 90.9191,
             "format": "double"
           },
           "endLong": {
             "type": "number",
+            "example": 179.4321,
             "format": "double"
           },
           "riderName": {
-            "type": "string"
+            "type": "string",
+            "example": "Mbah Buyut"
           },
           "driverName": {
-            "type": "string"
+            "type": "string",
+            "example": "Widya"
           },
           "driverVehicle": {
-            "type": "string"
+            "type": "string",
+            "example": "Sepeda"
           },
           "created": {
-            "type": "string"
+            "type": "string",
+            "example": "2022-05-17 14:28:32"
           }
         }
       },
@@ -67,28 +82,35 @@
         "properties": {
           "startLat": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": -90.123
           },
           "startLong": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": -179.0909
           },
           "endLat": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": 90.9191
           },
           "endLong": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": 179.4321
           },
           "riderName": {
-            "type": "string"
+            "type": "string",
+            "example": "Mbah Buyut"
           },
           "driverName": {
-            "type": "string"
+            "type": "string",
+            "example": "Widya"
           },
           "driverVehicle": {
-            "type": "string"
+            "type": "string",
+            "example": "Sepeda"
           }
         }
       },
@@ -150,31 +172,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Ride"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/NOT_FOUND"
-                    }
-                  ]
-                },
-                "example": [
-                  {
-                    "rideID": 1,
-                    "startLat": -90.123,
-                    "startLong": -179.0909,
-                    "endLat": 90.9191,
-                    "endLong": 179.4321,
-                    "riderName": "Mbah Buyut",
-                    "driverName": "Widya",
-                    "driverVehicle": "Sepeda",
-                    "created": "2022-05-17 14:28:32"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ride"
                   }
-                ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No ride can be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NOT_FOUND"
+                }
               }
             }
           }
@@ -189,50 +201,26 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RideBody"
-              },
-              "example": {
-                "startLat": -90.123,
-                "startLong": -179.0909,
-                "endLat": 90.9191,
-                "endLong": 179.4321,
-                "riderName": "Mbah Buyut",
-                "driverName": "Widya",
-                "driverVehicle": "Sepeda"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "List of rides",
+            "description": "Created ride",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Ride"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/VALIDATION_ERROR"
-                    }
-                  ]
-                },
-                "example": [
-                  {
-                    "rideID": 1,
-                    "startLat": -90.123,
-                    "startLong": -179.0909,
-                    "endLat": 90.9191,
-                    "endLong": 179.4321,
-                    "riderName": "Mbah Buyut",
-                    "driverName": "Widya",
-                    "driverVehicle": "Sepeda",
-                    "created": "2022-05-17 14:28:32"
-                  }
-                ]
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VALIDATION_ERROR" }
               }
             }
           }
@@ -258,31 +246,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Ride"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/NOT_FOUND"
-                    }
-                  ]
-                },
-                "example": [
-                  {
-                    "rideID": 1,
-                    "startLat": -90.123,
-                    "startLong": -179.0909,
-                    "endLat": 90.9191,
-                    "endLong": 179.4321,
-                    "riderName": "Mbah Buyut",
-                    "driverName": "Widya",
-                    "driverVehicle": "Sepeda",
-                    "created": "2022-05-17 14:28:32"
-                  }
-                ]
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No ride can be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NOT_FOUND"
+                }
               }
             }
           }
