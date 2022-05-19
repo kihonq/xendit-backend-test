@@ -29,8 +29,8 @@ Feel free to use any open source documentation tools such as OpenAPI / Swagger.
 
 #### Success Criteria
 
-1. A pull request against `master` of your fork with a clear description of the change and purpose and merge it
-2. **[BONUS]** Create an easy way to deploy and view the documentation in a web format and include instructions to do so
+1. ~~A pull request against `master` of your fork with a clear description of the change and purpose and merge it~~
+2. ~~**[BONUS]** Create an easy way to deploy and view the documentation in a web format and include instructions to do so~~
     - Run `npm run docs` and access the documentation through http://localhost:3000
     - For doc development, run `npm run watch:docs` and access through http://localhost:8080 to see live changes
 
@@ -45,17 +45,17 @@ Please implement the following tooling:
 
 #### Success Criteria
 
-1. Create a pull request against `master` of your fork with the new tooling and merge it
-    1. `eslint` should have an opinionated format
-    2. `nyc` should aim for test coverage of `80%` across lines, statements, and branches
-    3. `pre-push` should run the tests before allowing pushing using `git`
-    4. `winston` should be used to replace console logs and all errors should be logged as well. Logs should go to disk.
-2. Ensure that tooling is connected to `npm test`
+1. ~~Create a pull request against `master` of your fork with the new tooling and merge it~~
+    1. ~~`eslint` should have an opinionated format~~
+    2. ~~`nyc` should aim for test coverage of `80%` across lines, statements, and branches~~
+    3. ~~`pre-push` should run the tests before allowing pushing using `git`~~
+    4. ~~`winston` should be used to replace console logs and all errors should be logged as well. Logs should go to disk.~~
+2. ~~Ensure that tooling is connected to `npm test`~~
 3. Ensure that tests covers possible positive and negative scenarios
-4. Create a separate pull request against `master` of your fork with the linter fixes and merge it
+4. ~~Create a separate pull request against `master` of your fork with the linter fixes and merge it~~
 5. Create a separate pull request against `master` of your fork to increase code coverage to acceptable thresholds and merge it
 6. **[BONUS]** Add integration to CI such as Travis or Circle
-7. **[BONUS]** Add Typescript support
+7. ~~**[BONUS]** Add Typescript support~~
 
 ### Implement Pagination
 
@@ -71,7 +71,7 @@ Please implement pagination to retrieve pages of the resource `rides`.
 
 Please implement the following refactors of the code:
 
-1. Convert callback style code to use `async/await`
+1. ~~Convert callback style code to use `async/await`~~
 2. Reduce complexity at top level control flow logic and move logic down and test independently
 3. **[BONUS]** Split between functional and imperative function and test independently
 
@@ -83,16 +83,17 @@ Please implement the following refactors of the code:
 
 ### Security
 
-Please implement the following security controls for your system:
+Skipping this one since [TypeORM](https://dev.to/yoshi_yoshi/typeorm-prevent-sql-injection-with-node-js-react-typescript-in-2021-1go4) is being introduced in this project and no raw SQL query being called with `repo.query`
+~~Please implement the following security controls for your system:~~
 
-1. Ensure the system is not vulnerable to [SQL injection](https://www.owasp.org/index.php/SQL_Injection)
-2. **[BONUS]** Implement an additional security improvement of your choice
+1. ~~Ensure the system is not vulnerable to [SQL injection](https://www.owasp.org/index.php/SQL_Injection)~~
+2. ~~**[BONUS]** Implement an additional security improvement of your choice~~
 
 #### Success Criteria
 
-1. A pull request against `master` of your fork with:
-    1. Changes to the code
-    2. Tests ensuring the vulnerability is addressed
+1. ~~A pull request against `master` of your fork with:~~
+    1. ~~Changes to the code~~
+    2. ~~Tests ensuring the vulnerability is addressed~~
 
 ### Load Testing
 
