@@ -10,11 +10,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests",
-    "lint": "eslint --ext .js,.ts index.js tests",
-    "lint:fix": "npm run lint -- --fix",
-    "cover": "nyc npm run test",
     "start": "node index.js",
+    "test": "mocha tests",
+    "cover": "nyc npm run test",
+    "lint": "eslint --ext .js,.ts src index.js tests",
+    "lint:fix": "npm run lint -- --fix",
     "watch:docs": "npx @redocly/cli preview-docs docs/openapi.json",
     "build:docs": "npx redoc-cli build docs/openapi.json --output docs/index.html",
     "serve:docs": "npx serve docs",
