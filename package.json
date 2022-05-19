@@ -10,8 +10,8 @@
   },
   "scripts": {
     "build": "npx tsc --project tsconfig.build.json",
-    "start": "node dist/app.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/app.js\"",
+    "start:built": "node dist/app.js",
+    "start": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/app.js\"",
     "test": "mocha",
     "cover": "nyc npm run test",
     "lint": "eslint --ext .ts src",
