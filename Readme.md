@@ -1,4 +1,5 @@
 # Xendit Coding Exercise
+[![CircleCI](https://circleci.com/gh/kihonq/xendit-backend-test/tree/master.svg?style=shield)](https://circleci.com/gh/kihonq/xendit-backend-test/tree/master)  [![codecov](https://codecov.io/gh/kihonq/xendit-backend-test/branch/master/graph/badge.svg?token=8OU13YDAOH)](https://codecov.io/gh/kihonq/xendit-backend-test)
 
 The goal of these exercises are to assess your proficiency in software engineering that is related to the daily work that we do at Xendit. Please follow the instructions below to complete the assessment.
 
@@ -51,9 +52,9 @@ Please implement the following tooling:
     3. ~~`pre-push` should run the tests before allowing pushing using `git`~~
     4. ~~`winston` should be used to replace console logs and all errors should be logged as well. Logs should go to disk.~~
 2. ~~Ensure that tooling is connected to `npm test`~~
-3. Ensure that tests covers possible positive and negative scenarios
+3. ~~Ensure that tests covers possible positive and negative scenarios~~
 4. ~~Create a separate pull request against `master` of your fork with the linter fixes and merge it~~
-5. Create a separate pull request against `master` of your fork to increase code coverage to acceptable thresholds and merge it
+5. ~~Create a separate pull request against `master` of your fork to increase code coverage to acceptable thresholds and merge it~~
 6. **[BONUS]** Add integration to CI such as Travis or Circle
 7. ~~**[BONUS]** Add Typescript support~~
 
