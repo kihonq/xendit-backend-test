@@ -166,26 +166,82 @@
       "get": {
         "operationId": "rides",
         "summary": "Get list of rides",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "keyword",
+            "description": "Keyword for searching in `riderName`, `driverName` or `driverVehicle`",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Sort for rider, driver and vehicle, **use '-' for descending**",
+            "required": true,
+            "schema": { "type": "string", "enum": [
+              "rider",
+              "-rider",
+              "driver",
+              "-driver",
+              "vehicle",
+              "-vehicle"
+            ] }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Amount of rides per page",
+            "required": true,
+            "schema": { "type": "integer" }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Page cursor",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of rides",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Ride"
+                  "type": "object",
+                  "required": [
+                    "rides",
+                    "total"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Ride"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "currentPage": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "nextPage": {
+                      "type": "integer",
+                      "example": null
+                    },
+                    "prevPage": {
+                      "type": "integer",
+                      "example": null
+                    },
+                    "lastPage": {
+                      "type": "integer",
+                      "example": 1
+                    }
                   }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No ride can be found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NOT_FOUND"
                 }
               }
             }
