@@ -60,13 +60,13 @@ Please implement the following tooling:
 
 ### Implement Pagination
 
-Please implement pagination to retrieve pages of the resource `rides`.
+~~Please implement pagination to retrieve pages of the resource `rides`.~~
 
-1. Create a pull request against `master` with your changes to the `GET /rides` endpoint to support pagination including:
-    1. Code changes
-    2. Tests
-    3. Documentation
-2. Merge the pull request
+1. ~~Create a pull request against `master` with your changes to the `GET /rides` endpoint to support pagination including:~~
+    1. ~~Code changes~~
+    2. ~~Tests~~
+    3. ~~Documentation~~
+2. ~~Merge the pull request~~
 
 ### Refactoring
 
