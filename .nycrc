@@ -7,5 +7,10 @@
   "exclude": [
     "src/app.ts",
     "**/*.test.ts"
-  ]
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary"
+  ],
+  "cache": true
 }

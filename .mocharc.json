@@ -9,8 +9,8 @@
   "watch-ignore": ["node_modules", "dist"],
   "extensions": ["ts"],
   "spec": ["src/**/*.test.ts"],
-  "node-option": [
-    "loader=ts-node/esm"
-  ]
-
+  "node-option": ["loader=ts-node/esm"],
+  "reporter-options": {
+    "output": "mocha.json"
+  }
 }
