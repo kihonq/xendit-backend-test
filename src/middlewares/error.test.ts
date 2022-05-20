@@ -87,34 +87,21 @@ describe('Error middleware', () => {
     });
   });
 
-  // it('without "authorization" header', async () => {
-  //   const expectedResponse = {
-  //     error: "Missing JWT token from the 'Authorization' header",
-  //   };
-  //   mockRequest = {
-  //     headers: {},
-  //   };
-  //   errorMiddleware(
-  //     mockRequest as Request,
-  //     mockResponse as Response,
-  //     nextFunction,
-  //   );
+  it('should send internal server error body with 500 status', async () => {
+    const mockError = 'Non-contructored error';
+    const stubbedConsole = sandbox.stub(console, 'error');
+    errorMiddleware(
+      mockError,
+      mockRequest as Request,
+      mockResponse as Response,
+      nextFunction,
+    );
 
-  //   expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  // });
-
-  // it('with "authorization" header', async () => {
-  //   mockRequest = {
-  //     headers: {
-  //       authorization: 'Bearer abc',
-  //     },
-  //   };
-  //   errorMiddleware(
-  //     mockRequest as Request,
-  //     mockResponse as Response,
-  //     nextFunction,
-  //   );
-
-  //   expect(nextFunction).toBeCalledTimes(1);
-  // });
+    expect(mockResponse.status).to.have.been.calledWith(500);
+    expect(mockResponse.send).to.have.been.calledWith({
+      error_code: 'SERVER_ERROR',
+      message: 'Unknown error',
+    });
+    expect(stubbedConsole).to.have.been.called;
+  });
 });

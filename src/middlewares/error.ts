@@ -19,7 +19,13 @@ const errorMiddleware = (
       error_code: 'SERVER_ERROR',
       message: 'Unknown error',
     });
-    logger.error(error);
+
+    if (error instanceof Error) {
+      logger.error(error.message);
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 };
 
