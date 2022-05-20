@@ -2,16 +2,16 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:12.13.1
+      - image: circleci/node:16.15.0
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json"}}
+          key: v2-npm-deps-{{ checksum "package.json"}}
       - run:
           name: Install deps
           command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json"}}
+          key: v2-npm-deps-{{ checksum "package.json"}}
           paths:
             - ./node_modules
       - run:
