@@ -55,6 +55,8 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
     "mocha": "^9.2.2",
+    "mocha-junit-reporter": "^2.0.2",
+    "mocha-multi": "^1.1.6",
     "nodemon": "^2.0.16",
     "nyc": "^15.1.0",
     "prettier": "^2.6.2",
