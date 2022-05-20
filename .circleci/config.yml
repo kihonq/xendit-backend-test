@@ -1,29 +1,35 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
 jobs:
   build:
-    docker:
-      - image: circleci/node:16.15.0
+    executor: node/default
     steps:
       - checkout
-      - restore_cache:
-          key: v2-npm-deps-{{ checksum "package.json"}}
-      - run:
-          name: Install deps
-          command: npm install
-      - save_cache:
-          key: v2-npm-deps-{{ checksum "package.json"}}
+      - persist_to_workspace:
+          root: ~/project
           paths:
-            - ./node_modules
+            - .
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+  test:
+    executor: node/default
+    steps:
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Lint & Test
-          command: npm test && npm run codecov
-      - store_artifacts:
-          path: test-results.xml
-      - store-artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: test-results.xml
+          command: npm run lint && npm test && npm run codecov
       - run:
           name: upload to codecov
           command: bash <(curl -s https://codecov.io/bash)
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - node/test:
+          test-results-for: mocha
