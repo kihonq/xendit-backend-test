@@ -262,7 +262,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Created ride",
             "content": {
               "application/json": {

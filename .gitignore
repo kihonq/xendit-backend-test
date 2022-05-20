@@ -65,3 +65,7 @@ docs/index.html
 
 # build
 dist
+
+# artillery artifacts
+.artillery/summary.json
+.artillery/summary.json.html
