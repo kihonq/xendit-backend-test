@@ -1,0 +1,50 @@
+config:
+  target: "http://localhost:8010"
+  phases:
+    - duration: 5
+      arrivalRate: 20
+      name: "Warming up"
+    - duration: 15
+      arrivalRate: 20
+      rampTo: 100
+      name: "Ramping up"
+    - duration: 30
+      arrivalRate: 100
+      name: "Sustained load"
+  processor: "./processor.js"
+  plugins:
+    metrics-by-endpoint: {}
+    faker:
+      locale: en
+  variables:
+    startLat: "$faker.address.latitude"
+    startLong: "$faker.address.longitude"
+    endLat: "$faker.address.latitude"
+    endLong: "$faker.address.longitude"
+    riderName: "$faker.name.findName"
+    driverName: "$faker.name.findName"
+    driverVehicle: "$faker.name.findName"
+
+scenarios:
+  - name: "Rides API"
+    flow:
+      - get:
+          url: "/health"
+      - think: 3
+      - post:
+          url: "/rides"
+          json:
+            start_lat: "{{ startLat }}"
+            start_long: "{{ startLong }}"
+            end_lat: "{{ endLat }}"
+            end_long: "{{ endLong }}"
+            rider_name: "{{ riderName }}"
+            driver_name: "{{ driverName }}"
+            driver_vehicle: "{{ driverVehicle }}"
+      - think: 2
+      - get:
+          url: "/rides"
+      - think: 1
+      - get:
+          beforeRequest: generateRandomRiderID
+          url: "/rides/{{ riderID }}"
