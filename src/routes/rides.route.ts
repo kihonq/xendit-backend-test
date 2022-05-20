@@ -7,7 +7,7 @@ const ridesRouter = express.Router();
 ridesRouter.post('/', async (req, res, next) => {
   try {
     const createdRide = await createRide(req.body);
-    res.send(createdRide);
+    res.status(201).send(createdRide);
   } catch (error) {
     next(error);
   }
