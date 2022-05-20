@@ -5,7 +5,7 @@ import AppDataSource from '../db';
 import Ride from '../entities/Ride';
 
 const ridesRouter = express.Router();
-const rideRepo = AppDataSource.getRepository(Ride);
+export const rideRepo = AppDataSource.getRepository(Ride);
 
 ridesRouter.post('/', async (req, res, next) => {
   try {
@@ -60,7 +60,7 @@ ridesRouter.post('/', async (req, res, next) => {
       throw new BadRequest({
         body: {
           error_code: 'VALIDATION_ERROR',
-          message: 'Rider name must be a non empty string',
+          message: 'Driver name must be a non empty string',
         },
       });
     }
@@ -69,7 +69,7 @@ ridesRouter.post('/', async (req, res, next) => {
       throw new BadRequest({
         body: {
           error_code: 'VALIDATION_ERROR',
-          message: 'Rider name must be a non empty string',
+          message: `Driver's vehicle must be a non empty string`,
         },
       });
     }
