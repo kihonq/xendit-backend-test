@@ -1,0 +1,11 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.2
+  node: circleci/node@5.0.2
+workflows:
+  test_and_cover:
+    jobs:
+      - node/test:
+          test-results-for: mocha
+          post-steps:
+            - codecov/upload
