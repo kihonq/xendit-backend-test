@@ -4,5 +4,8 @@
   "lines": 80,
   "functions": 80,
   "statements": 80,
-  "exclude": "src/app.ts"
+  "exclude": [
+    "src/app.ts",
+    "**/*.test.ts"
+  ]
 }
