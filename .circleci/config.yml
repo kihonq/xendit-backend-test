@@ -1,35 +1,11 @@
 version: 2.1
 orbs:
+  codecov: codecov/codecov@3.2.2
   node: circleci/node@5.0.2
-jobs:
-  build:
-    executor: node/default
-    steps:
-      - checkout
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
-      - node/install-packages:
-          cache-path: ~/project/node_modules
-          override-ci-command: npm install
-  test:
-    executor: node/default
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Lint & Test
-          command: npm run lint && npm test && npm run codecov
-      - run:
-          name: upload to codecov
-          command: bash <(curl -s https://codecov.io/bash)
 workflows:
-  build_and_test:
+  test_and_cover:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
       - node/test:
           test-results-for: mocha
+          post-steps:
+            - codecov/upload
