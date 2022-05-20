@@ -57,7 +57,7 @@ Please implement the following tooling:
 3. - [x] Ensure that tests covers possible positive and negative scenarios
 4. - [x] Create a separate pull request against `master` of your fork with the linter fixes and merge it
 5. - [x] Create a separate pull request against `master` of your fork to increase code coverage to acceptable thresholds and merge it
-6. - [x] **[BONUS]** Add integration to CI such as Travis or Circle - _(CircleCI is being chosen here)_
+6. - [x] **[BONUS]** Add integration to CI such as Travis or Circle - _(CircleCI is being chosen here with Codecov integration)_
 7. - [x] **[BONUS]** Add Typescript support
 
 ### Implement Pagination
