@@ -4,10 +4,10 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import AppDataSource from './db';
-import errorMiddleware from './middlewares/error';
-import healthRouter from './routes/health';
-import ridesRouter from './routes/rides';
-import logger from './services/logger';
+import errorMiddleware from './middlewares/error.middleware';
+import healthRouter from './routes/health.route';
+import ridesRouter from './routes/rides.route';
+import logger from './services/logger.service';
 
 const app = express();
 

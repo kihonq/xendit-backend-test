@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { HttpError } from 'http-json-errors';
 
-import logger from '../services/logger';
+import logger from '../services/logger.service';
 
 const errorMiddleware = (
   error: unknown,

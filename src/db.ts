@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import Ride from './entities/Ride';
+import Ride from './entities/ride.entity';
 
 const AppDataSource = new DataSource({
   type: 'sqlite',

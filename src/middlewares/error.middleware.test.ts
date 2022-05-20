@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import { use, expect } from 'chai';
 import { HttpError } from 'http-json-errors';
 
-import errorMiddleware from './error';
+import errorMiddleware from './error.middleware';
 
 use(sinonChai);
 
