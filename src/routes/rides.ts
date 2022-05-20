@@ -1,11 +1,59 @@
-import express from 'express';
+import express, { Request } from 'express';
 import { BadRequest, NotFound } from 'http-json-errors';
+import { Like } from 'typeorm';
 
 import AppDataSource from '../db';
 import Ride from '../entities/Ride';
 
 const ridesRouter = express.Router();
 export const rideRepo = AppDataSource.getRepository(Ride);
+
+const SortValue = {
+  date: 'created',
+  rider: 'riderName',
+  driver: 'driverName',
+  vehicle: 'driverVehicle',
+};
+
+export const getSortKey = (querySort?: Request['query']['sort']) => {
+  if (
+    typeof querySort !== 'string' ||
+    !querySort ||
+    !Object.keys(SortValue).includes(
+      querySort.startsWith('-') ? querySort.substring(1) : querySort,
+    )
+  ) {
+    return { created: 'DESC' as const };
+  }
+
+  if (querySort.startsWith('-')) {
+    return {
+      [SortValue[querySort.substring(1) as keyof typeof SortValue]]:
+        'DESC' as const,
+    };
+  }
+
+  return { [SortValue[querySort as keyof typeof SortValue]]: 'ASC' as const };
+};
+
+export const paginateResponse = (
+  result: [Ride[], number],
+  page: number,
+  limit: number,
+) => {
+  const [data, count] = result;
+  const lastPage = Math.ceil(count / limit);
+  const nextPage = page + 1 > lastPage ? null : page + 1;
+  const prevPage = page - 1 < 1 ? null : page - 1;
+  return {
+    data,
+    count,
+    currentPage: page,
+    nextPage,
+    prevPage,
+    lastPage,
+  };
+};
 
 ridesRouter.post('/', async (req, res, next) => {
   try {
@@ -91,18 +139,29 @@ ridesRouter.post('/', async (req, res, next) => {
   }
 });
 
-ridesRouter.get('/', async (req, res, next) => {
+ridesRouter.get('/', async ({ query }, res, next) => {
   try {
-    const rides = await rideRepo.find();
+    const where =
+      typeof query.keyword === 'string'
+        ? [
+            { riderName: Like(`%${query.keyword}%`) },
+            { driverName: Like(`%${query.keyword}%`) },
+            { driverVehicle: Like(`%${query.keyword}%`) },
+          ]
+        : undefined;
+    const order = getSortKey(query.sort);
+    const limit = query.limit ? Number(query.limit) : 10;
+    const page = query.page ? Number(query.page) : 1;
+    const skip = (page - 1) * limit;
 
-    if (rides.length === 0) {
-      throw new NotFound({
-        body: {
-          error_code: 'RIDES_NOT_FOUND_ERROR',
-          message: 'Could not find any rides',
-        },
-      });
-    }
+    const data = await rideRepo.findAndCount({
+      where,
+      order,
+      skip,
+      take: limit,
+    });
+
+    const rides = paginateResponse(data, page, limit);
 
     res.send(rides);
   } catch (error) {

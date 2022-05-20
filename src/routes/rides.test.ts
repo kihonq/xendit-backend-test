@@ -1,8 +1,11 @@
 import { createSandbox, SinonSandbox } from 'sinon';
 import request from 'supertest';
+import { expect } from 'chai';
+import { Like } from 'typeorm';
 
 import app from '../app';
-import { rideRepo } from './rides';
+import { getSortKey, paginateResponse, rideRepo } from './rides';
+import Ride from '../entities/Ride';
 
 describe('GET /rides', () => {
   let sandbox: SinonSandbox;
@@ -25,33 +28,102 @@ describe('GET /rides', () => {
     sandbox.restore();
   });
 
-  it('should throw 404 when empty', (done) => {
-    sandbox.stub(rideRepo, 'find').returns(Promise.resolve([]));
+  it('should return empty list', (done) => {
+    sandbox.stub(rideRepo, 'findAndCount').returns(Promise.resolve([[], 0]));
     request(app)
       .get('/rides')
       .expect('Content-Type', /json/)
       .expect({
-        error_code: 'RIDES_NOT_FOUND_ERROR',
-        message: 'Could not find any rides',
+        data: [],
+        count: 0,
+        currentPage: 1,
+        nextPage: null,
+        prevPage: null,
+        lastPage: 0,
       })
-      .expect(404, done);
+      .expect(200, done);
   });
 
-  it('should return list of rides', (done) => {
+  it('should return paginated list of rides', (done) => {
     const mockCreatedDate = '2022-05-19T18:40:19.000Z';
     sandbox
-      .stub(rideRepo, 'find')
+      .stub(rideRepo, 'findAndCount')
       .returns(
         Promise.resolve([
-          { ...mockRide, rideID: 1, created: new Date(mockCreatedDate) },
+          [{ ...mockRide, rideID: 1, created: new Date(mockCreatedDate) }],
+          1,
         ]),
       );
 
     request(app)
       .get('/rides')
       .expect('Content-Type', /json/)
-      .expect([{ ...mockRide, rideID: 1, created: mockCreatedDate }])
+      .expect({
+        data: [{ ...mockRide, rideID: 1, created: mockCreatedDate }],
+        count: 1,
+        currentPage: 1,
+        nextPage: null,
+        prevPage: null,
+        lastPage: 1,
+      })
       .expect(200, done);
+  });
+
+  it('should have been called with correct pagination params', async () => {
+    const stubbedFinder = sandbox.stub(rideRepo, 'findAndCount');
+    const mockPage = 4;
+    const mockLimit = 3;
+    const mockQuery = {
+      page: mockPage,
+      limit: mockLimit,
+      keyword: 'mock keyword',
+      sort: '-rider',
+    };
+    const expectedArgs = {
+      where: [
+        { riderName: Like(`%mock keyword%`) },
+        { driverName: Like(`%mock keyword%`) },
+        { driverVehicle: Like(`%mock keyword%`) },
+      ],
+      skip: (mockPage - 1) * mockLimit,
+      take: mockLimit,
+      order: { riderName: 'DESC' },
+    };
+
+    await request(app).get('/rides').query(mockQuery);
+
+    expect(stubbedFinder).to.have.been.calledWith(expectedArgs);
+  });
+
+  it('should sort with correct key', async () => {
+    const correctSortKey = getSortKey('rider');
+    expect(correctSortKey).to.deep.equal({ riderName: 'ASC' });
+    const wrongSortKey = getSortKey('wrongKey');
+    expect(wrongSortKey).to.deep.equal({ created: 'DESC' });
+    const ascSort = getSortKey('driver');
+    expect(ascSort).to.deep.equal({ driverName: 'ASC' });
+    const descSort = getSortKey('-driver');
+    expect(descSort).to.deep.equal({ driverName: 'DESC' });
+  });
+
+  it('should return correct paginated response', async () => {
+    const mockCreatedDate = '2022-05-19T18:40:19.000Z';
+    const mockRides: Ride[] = Array.from({ length: 10 }).map((_, i) => ({
+      ...mockRide,
+      rideID: i + 1,
+      created: new Date(mockCreatedDate),
+    }));
+    const mockResult: [Ride[], number] = [mockRides, mockRides.length];
+    const response = paginateResponse(mockResult, 4, 2);
+
+    expect(response).to.deep.equal({
+      data: mockRides,
+      count: mockRides.length,
+      currentPage: 4,
+      nextPage: 5,
+      prevPage: 3,
+      lastPage: 5,
+    });
   });
 
   it('should return a ride by /:id', (done) => {
